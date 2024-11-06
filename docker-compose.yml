@@ -15,6 +15,16 @@ services:
     ports:
       - "172.17.0.1:27712:80"
 
+  pretix-cron:
+    image: "pretix/standalone:${SOFTWARE_VERSION_TAG}"
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - ./etc/pretix:/etc/pretix
+      - pretix-data:/data
+    entrypoint: ["sh", "-c", "while true; do pretix cron; sleep 300; done"]
+
   db:
     image: elestio/postgres:15
     restart: always
