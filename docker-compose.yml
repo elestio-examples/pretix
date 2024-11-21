@@ -17,6 +17,7 @@ services:
 
   pretix-cron:
     image: "pretix/standalone:${SOFTWARE_VERSION_TAG}"
+    restart: always
     depends_on:
       - db
       - redis
